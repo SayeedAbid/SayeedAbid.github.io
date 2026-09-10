@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md Sayeed Abid — AI/ML Engineer</title>
+<meta name="description" content="Md Sayeed Abid — AI/ML Software Engineer specializing in LLM systems, RAG, and applied machine learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e11;
+    --bg-panel:#12161b;
+    --bg-panel-2:#161b21;
+    --text:#e8ecef;
+    --text-dim:#8c96a3;
+    --text-faint:#5b636e;
+    --accent:#ffb454;
+    --line:#232a33;
+    --line-soft:#1a2028;
+    --maxw:1120px;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    margin:0;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  p{ color:var(--text-dim); }
+  ::selection{ background:var(--accent); color:#111; }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+  section{ padding:120px 0; border-bottom:1px solid var(--line-soft); }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px;
+    background:var(--accent);
+    border-radius:50%;
+    display:inline-block;
+  }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(28px,3.4vw,38px); margin-bottom:14px; }
+  .section-head p{ font-size:16px; max-width:520px; }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,14,17,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav{
+    max-width:var(--maxw); margin:0 auto; padding:0 32px;
+    height:66px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px; color:var(--text);
+    border:1px solid var(--line);
+    padding:6px 10px;
+    border-radius:var(--radius);
+  }
+  .logo span{ color:var(--accent); }
+  .nav-links{ display:flex; align-items:center; gap:36px; list-style:none; margin:0; padding:0; }
+  .nav-links a{
+    font-size:14px; color:var(--text-dim);
+    position:relative; padding:4px 0;
+    transition:color .2s ease;
+  }
+  .nav-links a:hover{ color:var(--text); }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0;
+    width:0; height:1px; background:var(--accent);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    padding:9px 16px;
+    border:1px solid var(--accent);
+    color:var(--accent);
+    border-radius:var(--radius);
+    display:inline-flex; align-items:center; gap:8px;
+    transition:background .2s ease, color .2s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{ background:var(--accent); color:#141414; }
+  .btn-ghost{
+    border-color:var(--line);
+    color:var(--text-dim);
+  }
+  .btn-ghost:hover{ background:var(--bg-panel); color:var(--text); border-color:var(--line); }
+  .nav-burger{ display:none; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:180px 0 110px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .hero-kicker{
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px; color:var(--text-dim);
+    margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero-kicker::before{
+    content:""; width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(255,180,84,0.15);
+  }
+  .hero h1{
+    font-size:clamp(40px,6.4vw,76px);
+    line-height:1.02;
+    max-width:900px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--text-faint);
+  }
+  .hero-sub{
+    margin-top:26px;
+    font-size:clamp(16px,1.8vw,19px);
+    color:var(--text-dim);
+    max-width:600px;
+  }
+  .hero-actions{
+    margin-top:40px;
+    display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .hero-meta{
+    margin-top:64px;
+    display:flex; gap:40px; flex-wrap:wrap;
+    padding-top:32px;
+    border-top:1px solid var(--line-soft);
+  }
+  .hero-meta div{ min-width:120px; }
+  .hero-meta .k{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--text-faint);
+    margin-bottom:6px;
+  }
+  .hero-meta .v{ font-size:14px; color:var(--text); }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns: 1.3fr 1fr; gap:64px;
+  }
+  .about-grid p{ font-size:16.5px; color:var(--text-dim); margin:0 0 18px; }
+  .stat-list{ display:flex; flex-direction:column; gap:0; }
+  .stat{
+    padding:18px 0;
+    border-top:1px solid var(--line-soft);
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  }
+  .stat:last-child{ border-bottom:1px solid var(--line-soft); }
+  .stat .label{ font-size:13.5px; color:var(--text-dim); }
+  .stat .val{ font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--accent); text-align:right; }
+
+  /* ---------- expertise ---------- */
+  .expertise-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+    background:var(--line-soft);
+    border:1px solid var(--line-soft);
+  }
+  .expertise-card{
+    background:var(--bg);
+    padding:34px;
+  }
+  .expertise-card .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--text-faint);
+    margin-bottom:18px;
+  }
+  .expertise-card h3{ font-size:19px; margin-bottom:10px; }
+  .expertise-card p{ font-size:14.5px; margin-bottom:20px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    border:1px solid var(--line);
+    padding:5px 10px;
+    border-radius:var(--radius);
+  }
+
+  /* ---------- experience timeline ---------- */
+  .timeline{ position:relative; }
+  .tl-item{
+    display:grid;
+    grid-template-columns: 150px 1px 1fr;
+    gap:0;
+  }
+  .tl-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-faint);
+    padding-top:4px;
+  }
+  .tl-line{
+    background:var(--line);
+    position:relative;
+  }
+  .tl-dot{
+    position:absolute; top:6px; left:50%;
+    transform:translateX(-50%);
+    width:9px; height:9px; border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--accent);
+  }
+  .tl-item:last-child .tl-line{ background:linear-gradient(var(--line), transparent 92%); }
+  .tl-content{
+    padding:0 0 56px 32px;
+  }
+  .tl-item:last-child .tl-content{ padding-bottom:4px; }
+  .tl-content h3{ font-size:19px; }
+  .tl-content .co{
+    font-size:14px; color:var(--accent);
+    margin-top:4px; margin-bottom:16px;
+    font-family:'JetBrains Mono', monospace;
+  }
+  .tl-content ul{ margin:0; padding-left:18px; }
+  .tl-content li{ color:var(--text-dim); font-size:14.5px; margin-bottom:9px; }
+
+  /* ---------- projects ---------- */
+  .project-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1px;
+    background:var(--line-soft); border:1px solid var(--line-soft);
+  }
+  .project-card{
+    background:var(--bg);
+    padding:32px;
+    display:flex; flex-direction:column;
+    transition:background .2s ease;
+  }
+  .project-card:hover{ background:var(--bg-panel); }
+  .project-card .pk{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; color:var(--text-faint);
+    margin-bottom:16px;
+  }
+  .project-card h3{ font-size:19px; margin-bottom:10px; }
+  .project-card p{ font-size:14.5px; flex-grow:1; margin-bottom:18px; }
+
+  /* ---------- research ---------- */
+  .pub-list{ display:flex; flex-direction:column; }
+  .pub{
+    display:grid; grid-template-columns: 40px 1fr; gap:20px;
+    padding:22px 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .pub:last-child{ border-bottom:1px solid var(--line-soft); }
+  .pub .idx{ font-family:'JetBrains Mono', monospace; color:var(--text-faint); font-size:13px; }
+  .pub h4{ font-size:16px; font-weight:500; margin-bottom:6px; }
+  .pub .venue{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--accent); }
+
+  /* ---------- education ---------- */
+  .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); }
+  .edu-card{ background:var(--bg); padding:32px; }
+  .edu-card .yr{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--text-faint); margin-bottom:14px; }
+  .edu-card h3{ font-size:18px; margin-bottom:6px; }
+  .edu-card .school{ color:var(--text-dim); font-size:14px; margin-bottom:4px; }
+  .edu-card .loc{ color:var(--text-faint); font-size:13px; }
+
+  /* ---------- contact / footer ---------- */
+  .contact{ text-align:left; }
+  .contact h2{ font-size:clamp(32px,5vw,54px); max-width:680px; margin-bottom:24px; }
+  .contact-row{
+    display:flex; gap:16px; flex-wrap:wrap; margin-top:36px;
+  }
+  footer{
+    padding:32px 0;
+  }
+  .footer-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  .footer-links{ display:flex; gap:28px; flex-wrap:wrap; }
+  .footer-links a{ font-size:13.5px; color:var(--text-dim); transition:color .2s ease; }
+  .footer-links a:hover{ color:var(--accent); }
+  .footer-note{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-faint); }
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    section{ padding:80px 0; }
+    .hero{ padding:130px 0 70px; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .expertise-grid{ grid-template-columns:1fr; }
+    .project-grid{ grid-template-columns:1fr; }
+    .edu-grid{ grid-template-columns:1fr; }
+    .tl-item{ grid-template-columns: 90px 1px 1fr; }
+    .hero-meta{ gap:24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="logo">MS<span>A</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn" href="mailto:sayeedabids@gmail.com">Get in touch</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-kicker">Available for AI/ML Engineering roles · Ottawa, ON (open to remote)</div>
+    <h1>Md Sayeed Abid <br><em>builds AI systems that hold up in production.</em></h1>
+    <p class="hero-sub">
+      AI/ML Software Engineer specializing in LLM pipelines, retrieval-augmented generation, and applied
+      machine learning — from prompt orchestration and vector search to structured-output validation and
+      failure analysis. MSc in Computer Science (Machine Learning &amp; Computer Vision), Concordia University.
+    </p>
+    <div class="hero-actions">
+      <a class="btn" href="Md_Sayeed_Abid_Resume.pdf" download>Download resume</a>
+      <a class="btn btn-ghost" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="#experience">See experience</a>
+    </div>
+    <div class="hero-meta">
+      <div><div class="k mono">LOCATION</div><div class="v">Ottawa, ON, Canada</div></div>
+      <div><div class="k mono">EMAIL</div><div class="v"><a href="mailto:sayeedabids@gmail.com">sayeedabids@gmail.com</a></div></div>
+      <div><div class="k mono">PHONE</div><div class="v">(438) 467-9166</div></div>
+      <div><div class="k mono">LINKEDIN</div><div class="v"><a href="https://www.linkedin.com/in/sayeed-abid-efaz25/" target="_blank" rel="noopener">/in/sayeed-abid-efaz25</a></div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="wrap" id="about">
+    <div class="section-head reveal">
+      <div class="eyebrow">About</div>
+      <h2>From enterprise document pipelines to computer vision research.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>
+          I'm an AI/ML Software Engineer building production-oriented Python, LLM, and RAG systems using
+          LangChain, Hugging Face, PyTorch, vector databases, Docker, and Linux. My focus is reliability:
+          designing AI pipelines with semantic retrieval, prompt orchestration, structured-output validation,
+          error handling, and fallback mechanisms that keep working when the input doesn't cooperate.
+        </p>
+        <p>
+          Most of my work sits at the intersection of research rigor and production discipline — debugging
+          ML workflows, analyzing failure patterns, and translating technical findings into solutions that
+          engineering and business stakeholders can actually ship. That includes an MSc at Concordia University
+          focused on machine learning and computer vision, alongside applied work in enterprise document
+          processing and financial fraud analytics.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="stat-list">
+          <div class="stat"><span class="label">Current focus</span><span class="val">LLM systems · RAG · AI agents</span></div>
+          <div class="stat"><span class="label">Education</span><span class="val">MSc, Computer Science — Concordia</span></div>
+          <div class="stat"><span class="label">Specialization</span><span class="val">Machine Learning &amp; Computer Vision</span></div>
+          <div class="stat"><span class="label">Publications</span><span class="val">IEEE Access · IGARSS 2022</span></div>
+          <div class="stat"><span class="label">Core stack</span><span class="val">Python · PyTorch · LangChain</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section class="wrap" id="expertise">
+    <div class="section-head reveal">
+      <div class="eyebrow">Expertise</div>
+      <h2>What I work on</h2>
+      <p>Four areas cover most of what I ship — from agentic LLM systems down to the infrastructure they run on.</p>
+    </div>
+    <div class="expertise-grid reveal">
+      <div class="expertise-card">
+        <div class="num mono">01</div>
+        <h3>AI &amp; agentic systems</h3>
+        <p>LLM-driven workflows, prompt orchestration, structured-output validation, and autonomous agents built for reliability, not demos.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">LLM APIs</span><span class="tag">RAG</span><span class="tag">AI Agents</span><span class="tag">Prompt Engineering</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="num mono">02</div>
+        <h3>Retrieval &amp; knowledge systems</h3>
+        <p>Semantic search and embedding pipelines that connect unstructured content to the right context, with retrieval quality actually measured.</p>
+        <div class="tag-row">
+          <span class="tag">Embeddings</span><span class="tag">Semantic Search</span><span class="tag">Vector Search</span><span class="tag">FAISS</span><span class="tag">Hugging Face</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="num mono">03</div>
+        <h3>Applied ML</h3>
+        <p>Predictive modeling, classification, and forecasting on real structured data — with error analysis as a first-class part of the workflow.</p>
+        <div class="tag-row">
+          <span class="tag">PyTorch</span><span class="tag">scikit-learn</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">Model Evaluation</span><span class="tag">Feature Engineering</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="num mono">04</div>
+        <h3>Systems &amp; MLOps</h3>
+        <p>The infrastructure underneath the models — reproducible experiments, containerized services, and cloud compute at scale.</p>
+        <div class="tag-row">
+          <span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Git</span><span class="tag">SQL</span><span class="tag">Azure OpenAI</span><span class="tag">Azure Databricks</span><span class="tag">Weights &amp; Biases</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="wrap" id="experience">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2>Career timeline</h2>
+    </div>
+    <div class="timeline reveal">
+
+      <div class="tl-item">
+        <div class="tl-date">Feb 2024 —<br>Aug 2025</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>MITACS Accelerate Research Intern</h3>
+          <div class="co">ERA Environmental Software Solution · Montreal, Canada</div>
+          <ul>
+            <li>Built production-oriented Python and LLM workflows for enterprise document processing, integrating OCR, prompt orchestration, structured-output validation, error handling, and fallback mechanisms across heterogeneous inputs.</li>
+            <li>Implemented RAG-based semantic retrieval using Hugging Face embeddings and FAISS/Qdrant, including metadata filtering and retrieval evaluation.</li>
+            <li>Investigated low-confidence LLM/extraction outputs through systematic error analysis, refining prompts, validation rules, retrieval logic, and fallback components.</li>
+            <li>Developed automated Python workflows converting unstructured artifacts into validated structured outputs for internal enterprise systems.</li>
+            <li>Collaborated with engineering and business stakeholders to investigate workflow failures and document operational procedures and production behavior.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Jan 2023 —<br>Aug 2025</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>Graduate Researcher</h3>
+          <div class="co">Concordia University · Montreal, Canada</div>
+          <ul>
+            <li>Designed, trained, and evaluated deep learning architectures in PyTorch for computer vision and document understanding, running controlled experiments across architectures, hyperparameters, and large-scale datasets.</li>
+            <li>Evaluated model reliability through systematic error analysis, benchmarking, and failure-pattern analysis, translating findings into corrective improvements.</li>
+            <li>Managed reproducible, version-controlled experiments using Python, PyTorch, Git, TensorBoard, and Weights &amp; Biases.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Jul 2022 —<br>Dec 2022</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>Assistant Officer</h3>
+          <div class="co">City Bank PLC · Dhaka, Bangladesh</div>
+          <ul>
+            <li>Analyzed confidential transaction and payment datasets to support fraud-monitoring workflows, helping identify suspicious activity and reduce false positives.</li>
+            <li>Built Python/SQL ETL and feature-engineering pipelines for enterprise payment datasets, supporting reproducible ML training and downstream analytics.</li>
+            <li>Translated model results into risk-based recommendations for fraud monitoring and payment processing decisions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">May 2021 —<br>Jul 2022</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>Software Engineer</h3>
+          <div class="co">Doer Services PLC · Dhaka, Bangladesh</div>
+          <ul>
+            <li>Developed Python-based machine-learning solutions for client business problems — data preparation, model development, evaluation, and integration into analytical workflows.</li>
+            <li>Translated client needs into technical solutions and built visual dashboards using Power BI prototypes to summarize insights for stakeholders.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="wrap" id="projects">
+    <div class="section-head reveal">
+      <div class="eyebrow">Projects</div>
+      <h2>Selected work</h2>
+      <p>Applied builds spanning document AI, table understanding research, and diagnostic agents.</p>
+    </div>
+    <div class="project-grid reveal">
+      <div class="project-card">
+        <div class="pk mono">DOCUMENT AI</div>
+        <h3>Document AI/LLM Pipeline</h3>
+        <p>A Python-based pipeline for parsing complex documents, combining OCR with LLM orchestration to turn unstructured input into validated structured output and cut manual review workload.</p>
+        <div class="tag-row">
+          <span class="tag">OCR</span><span class="tag">LangChain</span><span class="tag">Structured Output</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="pk mono">RESEARCH</div>
+        <h3>Tramba — Table Understanding</h3>
+        <p>Hybrid Vision-Mamba and Transformer architecture for table understanding. Large-scale benchmarking on the PubTables-1M dataset with reproducible experimentation across detection and structure-recognition tasks.</p>
+        <div class="tag-row">
+          <span class="tag">PyTorch</span><span class="tag">Vision-Mamba</span><span class="tag">Benchmarking</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="pk mono">AGENTS</div>
+        <h3>AI Troubleshooting Agent</h3>
+        <p>A Python agent that analyzes Linux and Docker application logs, extracts failure signatures, retrieves related incidents via embeddings, and generates ranked root-cause hypotheses with corrective actions.</p>
+        <div class="tag-row">
+          <span class="tag">Embeddings</span><span class="tag">Docker</span><span class="tag">Root-cause Analysis</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="pk mono">APPLIED ML</div>
+        <h3>ML Classification Project</h3>
+        <p>Supervised models (CatBoost, Random Forest, LightGBM) predicting business outcomes from structured data — full EDA, feature engineering, class-imbalance handling, and confusion-matrix analysis.</p>
+        <div class="tag-row">
+          <span class="tag">scikit-learn</span><span class="tag">CatBoost</span><span class="tag">LightGBM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="wrap" id="research">
+    <div class="section-head reveal">
+      <div class="eyebrow">Research</div>
+      <h2>Publications</h2>
+    </div>
+    <div class="pub-list reveal">
+      <div class="pub">
+        <div class="idx">01</div>
+        <div>
+          <h4>Tramba: Hybrid Vision-Mamba and Transformer Architecture for Table Understanding</h4>
+          <div class="venue">Ongoing</div>
+        </div>
+      </div>
+      <div class="pub">
+        <div class="idx">02</div>
+        <div>
+          <h4>Generalization of Bangla Sign Language Recognition</h4>
+          <div class="venue">IEEE Access, Volume 9</div>
+        </div>
+      </div>
+      <div class="pub">
+        <div class="idx">03</div>
+        <div>
+          <h4>Local Climate Zone Mapping Using Clustering Algorithms</h4>
+          <div class="venue">IGARSS 2022</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="wrap" id="education">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education</div>
+      <h2>Academic background</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card">
+        <div class="yr mono">JAN 2023 — AUG 2025</div>
+        <h3>MSc in Computer Science</h3>
+        <div class="school">Specialization: Machine Learning and Computer Vision</div>
+        <div class="loc">Concordia University · Montreal, Canada</div>
+      </div>
+      <div class="edu-card">
+        <div class="yr mono">JAN 2017 — APR 2021</div>
+        <h3>BSc in Computer Science &amp; Engineering</h3>
+        <div class="school">Specialization: Artificial Intelligence</div>
+        <div class="loc">North South University · Dhaka, Bangladesh</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="wrap contact" id="contact">
+    <div class="eyebrow reveal">Contact</div>
+    <h2 class="reveal">Building something that needs a reliable AI pipeline? Let's talk.</h2>
+    <p class="reveal" style="max-width:520px; font-size:16px;">
+      I'm currently based in Ottawa and open to AI/ML engineering roles, including remote and relocation.
+      The fastest way to reach me is email.
+    </p>
+    <div class="contact-row reveal">
+      <a class="btn" href="mailto:sayeedabids@gmail.com">sayeedabids@gmail.com</a>
+      <a class="btn btn-ghost" href="tel:+14384679166">(438) 467-9166</a>
+      <a class="btn btn-ghost" href="Md_Sayeed_Abid_Resume.pdf" download>Download resume</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="footer-row">
+    <div class="footer-note">© 2026 Md Sayeed Abid — Ottawa, ON</div>
+    <div class="footer-links">
+      <a href="mailto:sayeedabids@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/sayeed-abid-efaz25/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" id="github-link" target="_blank" rel="noopener">GitHub</a>
+      <a href="Md_Sayeed_Abid_Resume.pdf" download>Resume</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-reveal
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(el => io.observe(el));
+
+  // GitHub link placeholder — replace GITHUB_USERNAME below with the real profile.
+  document.getElementById('github-link').href = "https://github.com/GITHUB_USERNAME";
+</script>
+
+</body>
+</html>
