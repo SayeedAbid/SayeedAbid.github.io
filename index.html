@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md Sayeed Abid — AI/ML Engineer</title>
+<meta name="description" content="Md Sayeed Abid — AI/ML Software Engineer specializing in LLM systems, RAG, and applied machine learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e11;
+    --bg-panel:#12161b;
+    --text:#e8ecef;
+    --text-dim:#8c96a3;
+    --text-faint:#5b636e;
+    --accent:#ffb454;
+    --accent-rgb:255,180,84;
+    --line:#232a33;
+    --line-soft:#1a2028;
+    --maxw:1120px;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:auto;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    cursor:none;
+  }
+  @media (hover:none), (pointer:coarse){
+    body{ cursor:auto; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    body{ cursor:auto; }
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk', sans-serif;
+    margin:0;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  p{ color:var(--text-dim); }
+  ::selection{ background:var(--accent); color:#111; }
+  img{ max-width:100%; display:block; }
+
+  /* ---------- custom cursor ---------- */
+  #cursor-dot, #cursor-ring{
+    position:fixed; top:0; left:0; pointer-events:none; z-index:9999;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    will-change:transform;
+  }
+  #cursor-dot{ width:6px; height:6px; background:var(--accent); }
+  #cursor-ring{
+    width:34px; height:34px; border:1px solid rgba(var(--accent-rgb),0.5);
+    transition:width .2s ease, height .2s ease, border-color .2s ease, background .2s ease;
+  }
+  #cursor-ring.hovered{
+    width:56px; height:56px; background:rgba(var(--accent-rgb),0.08); border-color:var(--accent);
+  }
+  @media (hover:none), (pointer:coarse){
+    #cursor-dot,#cursor-ring{ display:none; }
+  }
+
+  /* ---------- scroll progress ---------- */
+  #progress-bar{
+    position:fixed; top:0; left:0; height:2px; width:0%;
+    background:var(--accent); z-index:200;
+    transition:width .05s linear;
+  }
+
+  /* ---------- preloader ---------- */
+  #preloader{
+    position:fixed; inset:0; background:var(--bg); z-index:10000;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #preloader .pl-label{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-dim);
+    margin-bottom:18px; letter-spacing:0.04em;
+  }
+  #preloader .pl-count{
+    font-family:'Space Grotesk', sans-serif; font-size:56px; color:var(--text);
+  }
+  #preloader .pl-bar{
+    width:220px; height:1px; background:var(--line); margin-top:24px; position:relative; overflow:hidden;
+  }
+  #preloader .pl-bar-fill{
+    position:absolute; top:0; left:0; height:100%; width:0%; background:var(--accent);
+  }
+  #preloader.done{ opacity:0; visibility:hidden; }
+
+  /* ---------- layout helpers ---------- */
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; position:relative; }
+  section{ padding:120px 0; border-bottom:1px solid var(--line-soft); position:relative; }
+  section:last-of-type{ border-bottom:none; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--accent);
+    display:flex; align-items:center; gap:10px; margin-bottom:20px;
+  }
+  .eyebrow::before{ content:""; width:7px; height:7px; background:var(--accent); border-radius:50%; display:inline-block; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(28px,3.4vw,38px); margin-bottom:14px; }
+  .section-head p{ font-size:16px; max-width:520px; }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(11,14,17,0.7);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav{
+    max-width:var(--maxw); margin:0 auto; padding:0 32px;
+    height:66px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace; font-size:15px; color:var(--text);
+    border:1px solid var(--line); padding:6px 10px; border-radius:var(--radius);
+  }
+  .logo span{ color:var(--accent); }
+  .nav-links{ display:flex; align-items:center; gap:36px; list-style:none; margin:0; padding:0; }
+  .nav-links a{ font-size:14px; color:var(--text-dim); position:relative; padding:4px 0; transition:color .2s ease; }
+  .nav-links a.active, .nav-links a:hover{ color:var(--text); }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--accent);
+    transition:width .25s ease;
+  }
+  .nav-links a.active::after, .nav-links a:hover::after{ width:100%; }
+  .btn{
+    font-family:'JetBrains Mono', monospace; font-size:13px; padding:9px 16px;
+    border:1px solid var(--accent); color:var(--accent); border-radius:var(--radius);
+    display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+    background:transparent; position:relative; overflow:hidden;
+  }
+  .btn span{ position:relative; z-index:1; transition:color .25s ease; }
+  .btn::before{
+    content:""; position:absolute; inset:0; background:var(--accent);
+    transform:translateY(101%); transition:transform .25s ease; z-index:0;
+  }
+  .btn:hover::before{ transform:translateY(0); }
+  .btn:hover span{ color:#141414; }
+  .btn-ghost{ border-color:var(--line); color:var(--text-dim); }
+  .btn-ghost::before{ background:var(--bg-panel); }
+  .btn-ghost:hover span{ color:var(--text); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:170px 0 100px; border-bottom:1px solid var(--line-soft); overflow:hidden; }
+  #hero-canvas-wrap{
+    position:absolute; top:0; right:0; width:56%; height:100%;
+    -webkit-mask-image:linear-gradient(to left, black 40%, transparent 95%);
+    mask-image:linear-gradient(to left, black 40%, transparent 95%);
+    pointer-events:none;
+  }
+  #hero-canvas-wrap canvas{ width:100%; height:100%; display:block; }
+  .hero-kicker{
+    font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--text-dim);
+    margin-bottom:22px; display:flex; align-items:center; gap:10px;
+  }
+  .hero-kicker::before{
+    content:""; width:7px; height:7px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 0 3px rgba(var(--accent-rgb),0.15);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 0 0 3px rgba(var(--accent-rgb),0.15);} 50%{ box-shadow:0 0 0 6px rgba(var(--accent-rgb),0.08);} }
+  .hero h1{ font-size:clamp(40px,6.4vw,76px); line-height:1.02; max-width:820px; overflow:hidden; }
+  .hero h1 .line{ display:block; overflow:hidden; }
+  .hero h1 .line span{ display:inline-block; will-change:transform; }
+  .hero h1 em{ font-style:normal; color:var(--text-faint); }
+  .hero-sub{ margin-top:26px; font-size:clamp(16px,1.8vw,19px); color:var(--text-dim); max-width:560px; }
+  .hero-actions{ margin-top:40px; display:flex; gap:14px; flex-wrap:wrap; }
+  .hero-meta{ margin-top:64px; display:flex; gap:40px; flex-wrap:wrap; padding-top:32px; border-top:1px solid var(--line-soft); }
+  .hero-meta div{ min-width:120px; }
+  .hero-meta .k{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-faint); margin-bottom:6px; }
+  .hero-meta .v{ font-size:14px; color:var(--text); }
+  .hero-meta a:hover{ color:var(--accent); }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap:64px; }
+  .about-grid p{ font-size:16.5px; color:var(--text-dim); margin:0 0 18px; }
+  .stat-list{ display:flex; flex-direction:column; }
+  .stat{
+    padding:18px 0; border-top:1px solid var(--line-soft);
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+  }
+  .stat:last-child{ border-bottom:1px solid var(--line-soft); }
+  .stat .label{ font-size:13.5px; color:var(--text-dim); }
+  .stat .val{ font-family:'JetBrains Mono', monospace; font-size:14px; color:var(--accent); text-align:right; }
+  .stat .val.count{ font-size:20px; }
+
+  /* ---------- expertise (tilt cards) ---------- */
+  .expertise-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); perspective:1000px; }
+  .expertise-card{
+    background:var(--bg); padding:34px; position:relative; overflow:hidden;
+    transform-style:preserve-3d; will-change:transform;
+    transition:transform .15s ease-out;
+  }
+  .expertise-card::before{
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:0;
+    background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(var(--accent-rgb),0.12), transparent 60%);
+    transition:opacity .3s ease;
+  }
+  .expertise-card:hover::before{ opacity:1; }
+  .expertise-card .num{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-faint); margin-bottom:18px; }
+  .expertise-card h3{ font-size:19px; margin-bottom:10px; }
+  .expertise-card p{ font-size:14.5px; margin-bottom:20px; }
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-dim);
+    border:1px solid var(--line); padding:5px 10px; border-radius:var(--radius);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .expertise-card:hover .tag{ border-color:rgba(var(--accent-rgb),0.4); }
+
+  /* ---------- tech ring (3D drag) ---------- */
+  .techring-section{ overflow:hidden; }
+  .techring-stage{
+    height:340px; display:flex; align-items:center; justify-content:center;
+    perspective:900px; margin-top:20px; cursor:grab; user-select:none; touch-action:pan-y;
+  }
+  .techring-stage.grabbing{ cursor:grabbing; }
+  #tech-ring{
+    position:relative; width:1px; height:1px; transform-style:preserve-3d; will-change:transform;
+  }
+  .ring-chip{
+    position:absolute; top:50%; left:50%; transform-style:preserve-3d;
+    font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text);
+    background:var(--bg-panel); border:1px solid var(--line);
+    padding:10px 18px; border-radius:var(--radius); white-space:nowrap;
+    margin:-19px 0 0 0;
+  }
+  .techring-hint{ margin-top:8px; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-faint); text-align:center; }
+
+  /* ---------- experience timeline ---------- */
+  .timeline{ position:relative; }
+  .tl-item{ display:grid; grid-template-columns: 150px 1px 1fr; gap:0; }
+  .tl-date{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--text-faint); padding-top:4px; }
+  .tl-line{ background:var(--line); position:relative; }
+  .tl-dot{
+    position:absolute; top:6px; left:50%; transform:translateX(-50%);
+    width:9px; height:9px; border-radius:50%; background:var(--bg); border:2px solid var(--accent);
+  }
+  .tl-item:last-child .tl-line{ background:linear-gradient(var(--line), transparent 92%); }
+  .tl-content{ padding:0 0 56px 32px; }
+  .tl-item:last-child .tl-content{ padding-bottom:4px; }
+  .tl-content h3{ font-size:19px; }
+  .tl-content .co{ font-size:14px; color:var(--accent); margin-top:4px; margin-bottom:16px; font-family:'JetBrains Mono', monospace; }
+  .tl-content ul{ margin:0; padding-left:18px; }
+  .tl-content li{ color:var(--text-dim); font-size:14.5px; margin-bottom:9px; }
+
+  /* ---------- project carousel ---------- */
+  .carousel-wrap{ position:relative; }
+  .carousel-viewport{ overflow:hidden; }
+  .carousel-track{ display:flex; transition:transform .55s cubic-bezier(.65,0,.35,1); }
+  .carousel-slide{ flex:0 0 100%; padding-right:2px; }
+  .project-card{
+    background:var(--bg-panel); border:1px solid var(--line-soft); padding:40px;
+    display:grid; grid-template-columns:80px 1fr; gap:28px; min-height:220px;
+  }
+  .project-card .pk{ font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-faint); }
+  .project-card h3{ font-size:23px; margin-bottom:12px; }
+  .project-card p{ font-size:15px; margin-bottom:20px; max-width:560px; }
+  .carousel-controls{ display:flex; align-items:center; justify-content:space-between; margin-top:28px; }
+  .carousel-arrows{ display:flex; gap:10px; }
+  .carousel-arrow{
+    width:42px; height:42px; border:1px solid var(--line); color:var(--text-dim);
+    display:flex; align-items:center; justify-content:center; border-radius:50%;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .carousel-arrow:hover{ border-color:var(--accent); color:var(--accent); }
+  .carousel-dots{ display:flex; gap:8px; }
+  .carousel-dot{ width:7px; height:7px; border-radius:50%; background:var(--line); transition:background .2s ease, transform .2s ease; }
+  .carousel-dot.active{ background:var(--accent); transform:scale(1.3); }
+
+  /* ---------- research ---------- */
+  .pub-list{ display:flex; flex-direction:column; }
+  .pub{ display:grid; grid-template-columns: 40px 1fr; gap:20px; padding:22px 0; border-top:1px solid var(--line-soft); }
+  .pub:last-child{ border-bottom:1px solid var(--line-soft); }
+  .pub .idx{ font-family:'JetBrains Mono', monospace; color:var(--text-faint); font-size:13px; }
+  .pub h4{ font-size:16px; font-weight:500; margin-bottom:6px; }
+  .pub .venue{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--accent); }
+
+  /* ---------- education ---------- */
+  .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); }
+  .edu-card{ background:var(--bg); padding:32px; }
+  .edu-card .yr{ font-family:'JetBrains Mono', monospace; font-size:12.5px; color:var(--text-faint); margin-bottom:14px; }
+  .edu-card h3{ font-size:18px; margin-bottom:6px; }
+  .edu-card .school{ color:var(--text-dim); font-size:14px; margin-bottom:4px; }
+  .edu-card .loc{ color:var(--text-faint); font-size:13px; }
+
+  /* ---------- contact / footer ---------- */
+  .contact h2{ font-size:clamp(32px,5vw,54px); max-width:680px; margin-bottom:24px; }
+  .contact-row{ display:flex; gap:16px; flex-wrap:wrap; margin-top:36px; }
+  footer{ padding:32px 0; }
+  .footer-row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .footer-links{ display:flex; gap:28px; flex-wrap:wrap; }
+  .footer-links a{ font-size:13.5px; color:var(--text-dim); transition:color .2s ease; }
+  .footer-links a:hover{ color:var(--accent); }
+  .footer-note{ font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--text-faint); }
+
+  /* ---------- reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(24px); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    section{ padding:80px 0; }
+    .hero{ padding:120px 0 60px; }
+    #hero-canvas-wrap{ display:none; }
+    .about-grid{ grid-template-columns:1fr; gap:40px; }
+    .expertise-grid{ grid-template-columns:1fr; }
+    .edu-grid{ grid-template-columns:1fr; }
+    .tl-item{ grid-template-columns: 90px 1px 1fr; }
+    .hero-meta{ gap:24px; }
+    .project-card{ grid-template-columns:1fr; padding:28px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="preloader">
+  <div class="pl-label mono">INITIALIZING PORTFOLIO</div>
+  <div class="pl-count mono" id="pl-count">0</div>
+  <div class="pl-bar"><div class="pl-bar-fill" id="pl-bar-fill"></div></div>
+</div>
+
+<div id="progress-bar"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<header>
+  <nav>
+    <a href="#top" class="logo" data-hover>MS<span>A</span></a>
+    <ul class="nav-links">
+      <li><a href="#about" data-hover>About</a></li>
+      <li><a href="#expertise" data-hover>Expertise</a></li>
+      <li><a href="#experience" data-hover>Experience</a></li>
+      <li><a href="#projects" data-hover>Projects</a></li>
+      <li><a href="#research" data-hover>Research</a></li>
+      <li><a href="#contact" data-hover>Contact</a></li>
+    </ul>
+    <a class="btn" href="mailto:sayeedabids@gmail.com" data-hover><span>Get in touch</span></a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div id="hero-canvas-wrap"></div>
+    <div class="hero-kicker">Available for AI/ML Engineering roles · Ottawa, ON (open to remote)</div>
+    <h1 id="hero-title">
+      <span class="line"><span>Md Sayeed Abid builds</span></span>
+      <span class="line"><em><span>AI systems that hold up</span></em></span>
+      <span class="line"><em><span>in production.</span></em></span>
+    </h1>
+    <p class="hero-sub reveal">
+      AI/ML Software Engineer specializing in LLM pipelines, retrieval-augmented generation, and applied
+      machine learning — from prompt orchestration and vector search to structured-output validation and
+      failure analysis. MSc in Computer Science (Machine Learning &amp; Computer Vision), Concordia University.
+    </p>
+    <div class="hero-actions reveal">
+      <a class="btn" href="Md_Sayeed_Abid_Resume.pdf" download data-hover><span>Download resume</span></a>
+      <a class="btn btn-ghost" href="#projects" data-hover><span>View projects</span></a>
+      <a class="btn btn-ghost" href="#experience" data-hover><span>See experience</span></a>
+    </div>
+    <div class="hero-meta reveal">
+      <div><div class="k mono">LOCATION</div><div class="v">Ottawa, ON, Canada</div></div>
+      <div><div class="k mono">EMAIL</div><div class="v"><a href="mailto:sayeedabids@gmail.com" data-hover>sayeedabids@gmail.com</a></div></div>
+      <div><div class="k mono">PHONE</div><div class="v">(438) 467-9166</div></div>
+      <div><div class="k mono">LINKEDIN</div><div class="v"><a href="https://www.linkedin.com/in/sayeed-abid-efaz25/" target="_blank" rel="noopener" data-hover>/in/sayeed-abid-efaz25</a></div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="wrap" id="about">
+    <div class="section-head reveal">
+      <div class="eyebrow">About</div>
+      <h2>From enterprise document pipelines to computer vision research.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>
+          I'm an AI/ML Software Engineer building production-oriented Python, LLM, and RAG systems using
+          LangChain, Hugging Face, PyTorch, vector databases, Docker, and Linux. My focus is reliability:
+          designing AI pipelines with semantic retrieval, prompt orchestration, structured-output validation,
+          error handling, and fallback mechanisms that keep working when the input doesn't cooperate.
+        </p>
+        <p>
+          Most of my work sits at the intersection of research rigor and production discipline — debugging
+          ML workflows, analyzing failure patterns, and translating technical findings into solutions that
+          engineering and business stakeholders can actually ship. That includes an MSc at Concordia University
+          focused on machine learning and computer vision, alongside applied work in enterprise document
+          processing and financial fraud analytics.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="stat-list">
+          <div class="stat"><span class="label">Professional roles</span><span class="val count" data-count="4">0</span></div>
+          <div class="stat"><span class="label">Degrees earned</span><span class="val count" data-count="2">0</span></div>
+          <div class="stat"><span class="label">Publications</span><span class="val count" data-count="3">0</span></div>
+          <div class="stat"><span class="label">Specialization</span><span class="val">ML &amp; Computer Vision</span></div>
+          <div class="stat"><span class="label">Core stack</span><span class="val">Python · PyTorch · LangChain</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section class="wrap" id="expertise">
+    <div class="section-head reveal">
+      <div class="eyebrow">Expertise</div>
+      <h2>What I work on</h2>
+      <p>Four areas cover most of what I ship — from agentic LLM systems down to the infrastructure they run on.</p>
+    </div>
+    <div class="expertise-grid reveal">
+      <div class="expertise-card" data-tilt>
+        <div class="num mono">01</div>
+        <h3>AI &amp; agentic systems</h3>
+        <p>LLM-driven workflows, prompt orchestration, structured-output validation, and autonomous agents built for reliability, not demos.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">LangChain</span><span class="tag">LLM APIs</span><span class="tag">RAG</span><span class="tag">AI Agents</span><span class="tag">Prompt Engineering</span>
+        </div>
+      </div>
+      <div class="expertise-card" data-tilt>
+        <div class="num mono">02</div>
+        <h3>Retrieval &amp; knowledge systems</h3>
+        <p>Semantic search and embedding pipelines that connect unstructured content to the right context, with retrieval quality actually measured.</p>
+        <div class="tag-row">
+          <span class="tag">Embeddings</span><span class="tag">Semantic Search</span><span class="tag">Vector Search</span><span class="tag">FAISS</span><span class="tag">Hugging Face</span>
+        </div>
+      </div>
+      <div class="expertise-card" data-tilt>
+        <div class="num mono">03</div>
+        <h3>Applied ML</h3>
+        <p>Predictive modeling, classification, and forecasting on real structured data — with error analysis as a first-class part of the workflow.</p>
+        <div class="tag-row">
+          <span class="tag">PyTorch</span><span class="tag">scikit-learn</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">Model Evaluation</span><span class="tag">Feature Engineering</span>
+        </div>
+      </div>
+      <div class="expertise-card" data-tilt>
+        <div class="num mono">04</div>
+        <h3>Systems &amp; MLOps</h3>
+        <p>The infrastructure underneath the models — reproducible experiments, containerized services, and cloud compute at scale.</p>
+        <div class="tag-row">
+          <span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">Git</span><span class="tag">SQL</span><span class="tag">Azure OpenAI</span><span class="tag">Azure Databricks</span><span class="tag">Weights &amp; Biases</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH RING -->
+  <section class="wrap techring-section">
+    <div class="section-head reveal">
+      <div class="eyebrow">Toolkit</div>
+      <h2>Tools in daily rotation</h2>
+      <p>Drag to spin — the stack I reach for across LLM systems, retrieval, and applied ML.</p>
+    </div>
+    <div class="techring-stage reveal" id="techring-stage">
+      <div id="tech-ring"></div>
+    </div>
+    <div class="techring-hint">drag to rotate</div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="wrap" id="experience">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2>Career timeline</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Feb 2024 —<br>Aug 2025</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>MITACS Accelerate Research Intern</h3>
+          <div class="co">ERA Environmental Software Solution · Montreal, Canada</div>
+          <ul>
+            <li>Built production-oriented Python and LLM workflows for enterprise document processing, integrating OCR, prompt orchestration, structured-output validation, error handling, and fallback mechanisms across heterogeneous inputs.</li>
+            <li>Implemented RAG-based semantic retrieval using Hugging Face embeddings and FAISS/Qdrant, including metadata filtering and retrieval evaluation.</li>
+            <li>Investigated low-confidence LLM/extraction outputs through systematic error analysis, refining prompts, validation rules, retrieval logic, and fallback components.</li>
+            <li>Developed automated Python workflows converting unstructured artifacts into validated structured outputs for internal enterprise systems.</li>
+            <li>Collaborated with engineering and business stakeholders to investigate workflow failures and document operational procedures and production behavior.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Jan 2023 —<br>Aug 2025</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>Graduate Researcher</h3>
+          <div class="co">Concordia University · Montreal, Canada</div>
+          <ul>
+            <li>Designed, trained, and evaluated deep learning architectures in PyTorch for computer vision and document understanding, running controlled experiments across architectures, hyperparameters, and large-scale datasets.</li>
+            <li>Evaluated model reliability through systematic error analysis, benchmarking, and failure-pattern analysis, translating findings into corrective improvements.</li>
+            <li>Managed reproducible, version-controlled experiments using Python, PyTorch, Git, TensorBoard, and Weights &amp; Biases.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">Jul 2022 —<br>Dec 2022</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>Assistant Officer</h3>
+          <div class="co">City Bank PLC · Dhaka, Bangladesh</div>
+          <ul>
+            <li>Analyzed confidential transaction and payment datasets to support fraud-monitoring workflows, helping identify suspicious activity and reduce false positives.</li>
+            <li>Built Python/SQL ETL and feature-engineering pipelines for enterprise payment datasets, supporting reproducible ML training and downstream analytics.</li>
+            <li>Translated model results into risk-based recommendations for fraud monitoring and payment processing decisions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-date">May 2021 —<br>Jul 2022</div>
+        <div class="tl-line"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <h3>Software Engineer</h3>
+          <div class="co">Doer Services PLC · Dhaka, Bangladesh</div>
+          <ul>
+            <li>Developed Python-based machine-learning solutions for client business problems — data preparation, model development, evaluation, and integration into analytical workflows.</li>
+            <li>Translated client needs into technical solutions and built visual dashboards using Power BI prototypes to summarize insights for stakeholders.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="wrap" id="projects">
+    <div class="section-head reveal">
+      <div class="eyebrow">Projects</div>
+      <h2>Selected work</h2>
+      <p>Applied builds spanning document AI, table understanding research, and diagnostic agents.</p>
+    </div>
+    <div class="carousel-wrap reveal">
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carousel-track">
+          <div class="carousel-slide">
+            <div class="project-card">
+              <div class="pk mono">01<br>DOCUMENT&nbsp;AI</div>
+              <div>
+                <h3>Document AI/LLM Pipeline</h3>
+                <p>A Python-based pipeline for parsing complex documents, combining OCR with LLM orchestration to turn unstructured input into validated structured output and cut manual review workload.</p>
+                <div class="tag-row"><span class="tag">OCR</span><span class="tag">LangChain</span><span class="tag">Structured Output</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="project-card">
+              <div class="pk mono">02<br>RESEARCH</div>
+              <div>
+                <h3>Tramba — Table Understanding</h3>
+                <p>Hybrid Vision-Mamba and Transformer architecture for table understanding. Large-scale benchmarking on the PubTables-1M dataset with reproducible experimentation across detection and structure-recognition tasks.</p>
+                <div class="tag-row"><span class="tag">PyTorch</span><span class="tag">Vision-Mamba</span><span class="tag">Benchmarking</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="project-card">
+              <div class="pk mono">03<br>AGENTS</div>
+              <div>
+                <h3>AI Troubleshooting Agent</h3>
+                <p>A Python agent that analyzes Linux and Docker application logs, extracts failure signatures, retrieves related incidents via embeddings, and generates ranked root-cause hypotheses with corrective actions.</p>
+                <div class="tag-row"><span class="tag">Embeddings</span><span class="tag">Docker</span><span class="tag">Root-cause Analysis</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="project-card">
+              <div class="pk mono">04<br>APPLIED&nbsp;ML</div>
+              <div>
+                <h3>ML Classification Project</h3>
+                <p>Supervised models (CatBoost, Random Forest, LightGBM) predicting business outcomes from structured data — full EDA, feature engineering, class-imbalance handling, and confusion-matrix analysis.</p>
+                <div class="tag-row"><span class="tag">scikit-learn</span><span class="tag">CatBoost</span><span class="tag">LightGBM</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <div class="carousel-dots" id="carousel-dots"></div>
+        <div class="carousel-arrows">
+          <button class="carousel-arrow" id="carousel-prev" aria-label="Previous project" data-hover>&#8592;</button>
+          <button class="carousel-arrow" id="carousel-next" aria-label="Next project" data-hover>&#8594;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="wrap" id="research">
+    <div class="section-head reveal">
+      <div class="eyebrow">Research</div>
+      <h2>Publications</h2>
+    </div>
+    <div class="pub-list reveal">
+      <div class="pub">
+        <div class="idx">01</div>
+        <div><h4>Tramba: Hybrid Vision-Mamba and Transformer Architecture for Table Understanding</h4><div class="venue">Ongoing</div></div>
+      </div>
+      <div class="pub">
+        <div class="idx">02</div>
+        <div><h4>Generalization of Bangla Sign Language Recognition</h4><div class="venue">IEEE Access, Volume 9</div></div>
+      </div>
+      <div class="pub">
+        <div class="idx">03</div>
+        <div><h4>Local Climate Zone Mapping Using Clustering Algorithms</h4><div class="venue">IGARSS 2022</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="wrap" id="education">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education</div>
+      <h2>Academic background</h2>
+    </div>
+    <div class="edu-grid reveal">
+      <div class="edu-card" data-tilt>
+        <div class="yr mono">JAN 2023 — AUG 2025</div>
+        <h3>MSc in Computer Science</h3>
+        <div class="school">Specialization: Machine Learning and Computer Vision</div>
+        <div class="loc">Concordia University · Montreal, Canada</div>
+      </div>
+      <div class="edu-card" data-tilt>
+        <div class="yr mono">JAN 2017 — APR 2021</div>
+        <h3>BSc in Computer Science &amp; Engineering</h3>
+        <div class="school">Specialization: Artificial Intelligence</div>
+        <div class="loc">North South University · Dhaka, Bangladesh</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="wrap contact" id="contact">
+    <div class="eyebrow reveal">Contact</div>
+    <h2 class="reveal">Building something that needs a reliable AI pipeline? Let's talk.</h2>
+    <p class="reveal" style="max-width:520px; font-size:16px;">
+      I'm currently based in Ottawa and open to AI/ML engineering roles, including remote and relocation.
+      The fastest way to reach me is email.
+    </p>
+    <div class="contact-row reveal">
+      <a class="btn" href="mailto:sayeedabids@gmail.com" data-hover><span>sayeedabids@gmail.com</span></a>
+      <a class="btn btn-ghost" href="tel:+14384679166" data-hover><span>(438) 467-9166</span></a>
+      <a class="btn btn-ghost" href="Md_Sayeed_Abid_Resume.pdf" download data-hover><span>Download resume</span></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="footer-row">
+    <div class="footer-note">© 2026 Md Sayeed Abid — Ottawa, ON</div>
+    <div class="footer-links">
+      <a href="mailto:sayeedabids@gmail.com" data-hover>Email</a>
+      <a href="https://www.linkedin.com/in/sayeed-abid-efaz25/" target="_blank" rel="noopener" data-hover>LinkedIn</a>
+      <a href="#" id="github-link" target="_blank" rel="noopener" data-hover>GitHub</a>
+      <a href="Md_Sayeed_Abid_Resume.pdf" download data-hover>Resume</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+  /* ---------------- Preloader ---------------- */
+  var plCount = document.getElementById('pl-count');
+  var plFill = document.getElementById('pl-bar-fill');
+  var preloader = document.getElementById('preloader');
+  var progress = { v: 0 };
+  var plTween = window.gsap ? gsap.to(progress, {
+    v: 100, duration: 1.1, ease: 'power2.out',
+    onUpdate: function(){
+      var val = Math.round(progress.v);
+      plCount.textContent = val;
+      plFill.style.width = val + '%';
+    },
+    onComplete: finishLoad
+  }) : null;
+  if (!window.gsap) { finishLoad(); }
+
+  function finishLoad(){
+    setTimeout(function(){
+      preloader.classList.add('done');
+      document.body.style.cursor = isTouch ? 'auto' : 'none';
+      runIntro();
+    }, 150);
+  }
+
+  /* ---------------- Custom cursor ---------------- */
+  if (!isTouch) {
+    var dot = document.getElementById('cursor-dot');
+    var ring = document.getElementById('cursor-ring');
+    var mx = window.innerWidth/2, my = window.innerHeight/2;
+    var rx = mx, ry = my;
+    window.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+    });
+    (function loop(){
+      rx += (mx - rx) * 0.16;
+      ry += (my - ry) * 0.16;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('[data-hover]').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ ring.classList.add('hovered'); });
+      el.addEventListener('mouseleave', function(){ ring.classList.remove('hovered'); });
+    });
+  }
+
+  /* ---------------- Scroll progress bar ---------------- */
+  var progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  });
+
+  /* ---------------- Active nav link on scroll ---------------- */
+  var navLinks = document.querySelectorAll('.nav-links a');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+  window.addEventListener('scroll', function(){
+    var pos = window.scrollY + 140;
+    var current = null;
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s.id; });
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  /* ---------------- Hero intro animation ---------------- */
+  function runIntro(){
+    if (!window.gsap) return;
+    gsap.set('.hero h1 .line span', { yPercent: 110 });
+    var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    tl.to('.hero-kicker', { opacity: 1, y: 0, duration: 0.01 })
+      .from('.hero-kicker', { opacity: 0, y: 12, duration: 0.5 })
+      .to('.hero h1 .line span', { yPercent: 0, duration: 1, stagger: 0.11 }, '-=0.2')
+      .to('.hero-sub, .hero-actions, .hero-meta', { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, '-=0.5');
+  }
+  gsap.set('.hero-kicker', { opacity: 0 });
+
+  /* ---------------- Scroll reveals ---------------- */
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if (el.closest('.hero')) return; // hero handled by intro tl
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
+    });
+    // stagger children inside grids for a nicer cascade
+    gsap.utils.toArray('.expertise-card').forEach(function(card, i){
+      gsap.to(card, {
+        opacity: 1, y: 0, duration: 0.7, delay: (i % 2) * 0.08,
+        scrollTrigger: { trigger: card, start: 'top 90%' }
+      });
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.style.opacity = 1; el.style.transform = 'none'; });
+  }
+
+  /* ---------------- Tilt cards ---------------- */
+  if (!isTouch) {
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        var rx = (py - 0.5) * -8;
+        var ry = (px - 0.5) * 8;
+        card.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateZ(0)';
+        card.style.setProperty('--mx', (px*100) + '%');
+        card.style.setProperty('--my', (py*100) + '%');
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
+
+  /* ---------------- Magnetic buttons ---------------- */
+  if (!isTouch) {
+    document.querySelectorAll('.btn').forEach(function(btn){
+      btn.addEventListener('mousemove', function(e){
+        var r = btn.getBoundingClientRect();
+        var x = (e.clientX - r.left - r.width/2) * 0.3;
+        var y = (e.clientY - r.top - r.height/2) * 0.4;
+        btn.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      });
+      btn.addEventListener('mouseleave', function(){ btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  /* ---------------- Animated counters ---------------- */
+  document.querySelectorAll('.val.count').forEach(function(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var done = false;
+    function tryAnimate(){
+      if (done) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.9) {
+        done = true;
+        var obj = { v: 0 };
+        if (window.gsap) {
+          gsap.to(obj, { v: target, duration: 1.1, ease: 'power2.out', onUpdate: function(){ el.textContent = Math.round(obj.v); } });
+        } else { el.textContent = target; }
+      }
+    }
+    window.addEventListener('scroll', tryAnimate);
+    tryAnimate();
+  });
+
+  /* ---------------- Project carousel ---------------- */
+  (function(){
+    var track = document.getElementById('carousel-track');
+    var slides = track.children;
+    var dotsWrap = document.getElementById('carousel-dots');
+    var prev = document.getElementById('carousel-prev');
+    var next = document.getElementById('carousel-next');
+    var idx = 0;
+    for (var i = 0; i < slides.length; i++) {
+      var d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('data-hover', '');
+      d.addEventListener('click', (function(i){ return function(){ goTo(i); }; })(i));
+      dotsWrap.appendChild(d);
+    }
+    function goTo(i){
+      idx = (i + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      Array.prototype.forEach.call(dotsWrap.children, function(dot, j){
+        dot.classList.toggle('active', j === idx);
+      });
+    }
+    prev.addEventListener('click', function(){ goTo(idx - 1); });
+    next.addEventListener('click', function(){ goTo(idx + 1); });
+
+    // basic touch swipe
+    var startX = null;
+    track.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener('touchend', function(e){
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (dx > 40) goTo(idx - 1);
+      else if (dx < -40) goTo(idx + 1);
+      startX = null;
+    });
+  })();
+
+  /* ---------------- 3D draggable tech ring ---------------- */
+  (function(){
+    var stage = document.getElementById('techring-stage');
+    var ring = document.getElementById('tech-ring');
+    var items = ['Python','LangChain','PyTorch','RAG','FAISS','Docker','Hugging Face','Azure OpenAI','scikit-learn','Git','SQL','AI Agents'];
+    var radius = 220;
+    var n = items.length;
+    items.forEach(function(text, i){
+      var chip = document.createElement('div');
+      chip.className = 'ring-chip';
+      chip.textContent = text;
+      var angle = (i / n) * 360;
+      chip.style.transform = 'rotateY(' + angle + 'deg) translateZ(' + radius + 'px)';
+      ring.appendChild(chip);
+    });
+
+    var rotY = 0, velY = 0;
+    var dragging = false, lastX = 0;
+
+    stage.addEventListener('pointerdown', function(e){
+      dragging = true; lastX = e.clientX; stage.classList.add('grabbing');
+      stage.setPointerCapture(e.pointerId);
+    });
+    stage.addEventListener('pointermove', function(e){
+      if (!dragging) return;
+      var dx = e.clientX - lastX;
+      lastX = e.clientX;
+      velY = dx * 0.4;
+      rotY += velY;
+    });
+    function endDrag(){ dragging = false; stage.classList.remove('grabbing'); }
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointerleave', endDrag);
+
+    function animate(){
+      if (!dragging) {
+        rotY += reduceMotion ? 0 : (0.06 + velY);
+        velY *= 0.94;
+      }
+      ring.style.transform = 'rotateY(' + rotY + 'deg)';
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
+  /* ---------------- Hero 3D particle network (Three.js) ---------------- */
+  if (window.THREE && !isTouch && !reduceMotion) {
+    var wrap = document.getElementById('hero-canvas-wrap');
+    var w = wrap.clientWidth, h = wrap.clientHeight;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(50, w / h, 1, 2000);
+    camera.position.z = 480;
+    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, h);
+    wrap.appendChild(renderer.domElement);
+
+    var COUNT = 70;
+    var RANGE = 420;
+    var positions = [];
+    var velocities = [];
+    for (var i = 0; i < COUNT; i++) {
+      var p = new THREE.Vector3(
+        (Math.random() - 0.5) * RANGE,
+        (Math.random() - 0.5) * RANGE,
+        (Math.random() - 0.5) * RANGE * 0.6
+      );
+      positions.push(p);
+      velocities.push(new THREE.Vector3(
+        (Math.random() - 0.5) * 0.22,
+        (Math.random() - 0.5) * 0.22,
+        (Math.random() - 0.5) * 0.12
+      ));
+    }
+
+    var pointsGeo = new THREE.BufferGeometry();
+    var posArr = new Float32Array(COUNT * 3);
+    pointsGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+    var pointsMat = new THREE.PointsMaterial({ color: 0xffb454, size: 3.4, transparent: true, opacity: 0.85 });
+    var pointCloud = new THREE.Points(pointsGeo, pointsMat);
+    scene.add(pointCloud);
+
+    var lineGeo = new THREE.BufferGeometry();
+    var maxLines = COUNT * 8;
+    var lineArr = new Float32Array(maxLines * 2 * 3);
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(lineArr, 3));
+    var lineMat = new THREE.LineBasicMaterial({ color: 0x3a4552, transparent: true, opacity: 0.35 });
+    var lineSegments = new THREE.LineSegments(lineGeo, lineMat);
+    scene.add(lineSegments);
+
+    var group = new THREE.Group();
+    group.add(pointCloud);
+    group.add(lineSegments);
+    scene.add(group);
+
+    var targetRotX = 0, targetRotY = 0;
+    wrap.addEventListener('mousemove', function(e){}); // wrap is pointer-events:none, use window instead
+    window.addEventListener('mousemove', function(e){
+      targetRotY = (e.clientX / window.innerWidth - 0.5) * 0.5;
+      targetRotX = (e.clientY / window.innerHeight - 0.5) * 0.3;
+    });
+
+    var LINK_DIST = 130;
+    function render(){
+      requestAnimationFrame(render);
+      for (var i = 0; i < COUNT; i++) {
+        var p = positions[i], v = velocities[i];
+        p.add(v);
+        if (p.x > RANGE/2 || p.x < -RANGE/2) v.x *= -1;
+        if (p.y > RANGE/2 || p.y < -RANGE/2) v.y *= -1;
+        if (p.z > RANGE*0.3 || p.z < -RANGE*0.3) v.z *= -1;
+        posArr[i*3] = p.x; posArr[i*3+1] = p.y; posArr[i*3+2] = p.z;
+      }
+      pointsGeo.attributes.position.needsUpdate = true;
+
+      var lineIdx = 0;
+      for (var a = 0; a < COUNT && lineIdx < maxLines; a++) {
+        for (var b = a + 1; b < COUNT && lineIdx < maxLines; b++) {
+          var d = positions[a].distanceTo(positions[b]);
+          if (d < LINK_DIST) {
+            lineArr[lineIdx*6]   = positions[a].x;
+            lineArr[lineIdx*6+1] = positions[a].y;
+            lineArr[lineIdx*6+2] = positions[a].z;
+            lineArr[lineIdx*6+3] = positions[b].x;
+            lineArr[lineIdx*6+4] = positions[b].y;
+            lineArr[lineIdx*6+5] = positions[b].z;
+            lineIdx++;
+          }
+        }
+      }
+      lineGeo.setDrawRange(0, lineIdx * 2);
+      lineGeo.attributes.position.needsUpdate = true;
+
+      group.rotation.y += (targetRotY - group.rotation.y) * 0.04 + 0.0009;
+      group.rotation.x += (targetRotX - group.rotation.x) * 0.04;
+
+      renderer.render(scene, camera);
+    }
+    render();
+
+    window.addEventListener('resize', function(){
+      var nw = wrap.clientWidth, nh = wrap.clientHeight;
+      camera.aspect = nw / nh;
+      camera.updateProjectionMatrix();
+      renderer.setSize(nw, nh);
+    });
+
+    document.addEventListener('visibilitychange', function(){
+      // renderer keeps running via rAF which auto-pauses in hidden tabs in most browsers
+    });
+  }
+
+  /* ---------------- GitHub link placeholder ---------------- */
+  document.getElementById('github-link').href = 'https://github.com/GITHUB_USERNAME';
+
+})();
+</script>
+
+</body>
+</html>
